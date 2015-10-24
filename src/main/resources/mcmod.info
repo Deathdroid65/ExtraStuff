@@ -1,0 +1,16 @@
+[
+{
+  "modid": "ExtraStuff",
+  "name": "Extra Stuff",
+  "description": "A mod that adds some extra stuff.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://github.com/Deathdroid65/ExtraStuff",
+  "updateUrl": "",
+  "authorList": ["Deathdroid65"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
