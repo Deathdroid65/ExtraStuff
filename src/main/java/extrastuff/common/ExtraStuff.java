@@ -20,6 +20,6 @@ public class ExtraStuff {
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		// ExtraStuffRecipes.register();
+		ExtraStuffRecipes.register();
 	}
 }
