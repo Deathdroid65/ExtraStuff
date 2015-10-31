@@ -2,6 +2,7 @@ package extrastuff.common.block;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import extrastuff.common.reference.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -22,7 +23,7 @@ public class BlockTitanium extends Block {
 		this.setCreativeTab(CreativeTabs.tabBlock);
 		this.setStepSound(Block.soundTypeMetal);
 		this.setHarvestLevel("pickaxe", 3);
-		this.setBlockName("titaniumBlock");
+		this.setBlockName(Reference.MOD_ID + ":titaniumBlock");
 	}
 
 	@Override

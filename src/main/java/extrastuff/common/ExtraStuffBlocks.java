@@ -2,6 +2,7 @@ package extrastuff.common;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.GameRegistry.ObjectHolder;
+import extrastuff.common.block.BlockPipe;
 import extrastuff.common.block.BlockTitanium;
 import extrastuff.common.reference.Reference;
 import net.minecraft.block.Block;
@@ -9,8 +10,10 @@ import net.minecraft.block.Block;
 @ObjectHolder(Reference.MOD_ID)
 public class ExtraStuffBlocks {
 	public static final Block titaniumBlock = new BlockTitanium();
+	public static final Block pipeBlock = new BlockPipe();
 
 	public static void register() {
 		GameRegistry.registerBlock(titaniumBlock, "titaniumBlock");
+		GameRegistry.registerBlock(pipeBlock, "pipeBlock");
 	}
 }

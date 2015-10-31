@@ -2,6 +2,7 @@ package extrastuff.common.item;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import extrastuff.common.reference.Reference;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -13,7 +14,7 @@ public class ItemTitaniumIngot extends Item {
 	public ItemTitaniumIngot() {
 		maxStackSize = 64;
 		setCreativeTab(CreativeTabs.tabMisc);
-		setUnlocalizedName("titaniumIngot");
+		setUnlocalizedName(Reference.MOD_ID + ":titaniumIngot");
 		this.setTextureName("TitaniumIngot");
 	}
 
