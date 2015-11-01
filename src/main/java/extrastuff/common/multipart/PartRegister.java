@@ -20,7 +20,7 @@ public class PartRegister implements IPartFactory, IPartConverter {
 		GameRegistry.registerBlock(energyCable, Reference.MOD_ID + ":energyCable");
 		MultiPartRegistry.registerConverter(this);
 		MultiPartRegistry.registerParts(this, new String[]{
-				"energyCable"
+				Reference.MOD_ID + ":energyCable"
 		});
 	}
 
@@ -38,7 +38,7 @@ public class PartRegister implements IPartFactory, IPartConverter {
 
 	@Override
 	public TMultiPart createPart(String name, boolean client) {
-		if(name.equals("energyCable"))return new PartCable();
+		if(name.equals(Reference.MOD_ID + ":energyCable"))return new PartCable();
 		return null;
 	}
 }
