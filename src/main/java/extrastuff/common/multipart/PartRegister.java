@@ -6,44 +6,38 @@ import codechicken.multipart.MultiPartRegistry.IPartFactory;
 import codechicken.multipart.MultiPartRegistry.IPartConverter;
 import codechicken.multipart.TMultiPart;
 import cpw.mods.fml.common.registry.GameRegistry;
-import extrastuff.common.block.BlockCable;
-import extrastuff.common.block.ExampleBlock;
+import extrastuff.common.block.BlockEnergyCable;
+import extrastuff.common.reference.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 
 import java.util.Arrays;
 
 public class PartRegister implements IPartFactory, IPartConverter {
-	public static Block exampleBlock = new ExampleBlock();
-	public static Block energyCable = new BlockCable();
+	public static Block energyCable = new BlockEnergyCable();
 
 	public void register() {
-		GameRegistry.registerBlock(exampleBlock, "multipartExample");
-		GameRegistry.registerBlock(energyCable, "energyCable");
-
+		GameRegistry.registerBlock(energyCable, Reference.MOD_ID + ":energyCable");
 		MultiPartRegistry.registerConverter(this);
 		MultiPartRegistry.registerParts(this, new String[]{
-				"myBlockName",
 				"energyCable"
 		});
 	}
 
 	@Override
 	public Iterable<Block> blockTypes() {
-		return Arrays.asList(exampleBlock, energyCable);
+		return Arrays.asList(energyCable);
 	}
 
 	@Override
 	public TMultiPart convert(World world, BlockCoord pos) {
-		Block b = world.getBlock(pos.x, pos.y, pos.z);
-		if(b == exampleBlock) return new ExamplePart();
+		Block b = world.getBlock(pos.x, pos.y, pos.z);;
 		if(b == energyCable) return new PartCable();
 		return null;
 	}
 
 	@Override
 	public TMultiPart createPart(String name, boolean client) {
-		if(name.equals("myBlockName"))return new ExamplePart();
 		if(name.equals("energyCable"))return new PartCable();
 		return null;
 	}

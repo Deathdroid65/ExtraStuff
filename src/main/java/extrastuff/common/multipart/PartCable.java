@@ -2,12 +2,13 @@ package extrastuff.common.multipart;
 
 import codechicken.lib.vec.Cuboid6;
 import codechicken.multipart.minecraft.McMetaPart;
+import extrastuff.common.reference.Reference;
 import net.minecraft.block.Block;
 
 public class PartCable extends McMetaPart {
 	@Override
 	public String getType() {
-		return "energyCable";
+		return Reference.MOD_ID + ":energyCable";
 	}
 
 	@Override

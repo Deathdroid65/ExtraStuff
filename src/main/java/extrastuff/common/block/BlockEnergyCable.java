@@ -1,22 +1,25 @@
 package extrastuff.common.block;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import extrastuff.common.reference.Reference;
 import extrastuff.common.tileentity.TileEntityCable;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-public class BlockCable extends BlockContainer {
+public class BlockEnergyCable extends BlockContainer {
+	public IIcon[] icons = new IIcon[1];
 
-	public BlockCable() {
+	public BlockEnergyCable() {
 		super(Material.ground);
 
 		float pixel = 1F / 16F;
 		this.setBlockBounds(5 * pixel, 5 * pixel, 5 * pixel, 1 - 5 * pixel, 1 - 5 * pixel, 1 - 5 * pixel);
-		this.setCreativeTab(CreativeTabs.tabBlock);
 		this.setBlockName(Reference.MOD_ID +":energyCable");
 		this.useNeighborBrightness = true;
 	}
@@ -55,11 +58,19 @@ public class BlockCable extends BlockContainer {
 		return false;
 	}
 
-	public boolean renderAsNormalBlock() {
-		return false;
-	}
-
 	public TileEntity createNewTileEntity(World world, int i) {
 		return new TileEntityCable();
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerBlockIcons(IIconRegister register) {
+		icons[0] = register.registerIcon(Reference.MOD_ID + ":Cable");
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public IIcon getIcon(int side, int meta) {
+		return icons[0];
 	}
 }

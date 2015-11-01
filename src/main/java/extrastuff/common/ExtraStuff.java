@@ -6,11 +6,8 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.registry.GameRegistry;
-import extrastuff.common.block.ExampleBlock;
 import extrastuff.common.multipart.PartRegister;
 import extrastuff.common.reference.Reference;
-import net.minecraft.block.Block;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,17 +19,12 @@ public class ExtraStuff {
 	@SidedProxy(clientSide = "extrastuff.client.ClientProxy", serverSide = "extrastuff.common.CommonProxy")
 	public static CommonProxy proxy;
 
-	public static Logger logger = LogManager.getLogger("ExtraStuff");
-
-
+	public static Logger logger = LogManager.getLogger(Reference.MOD_NAME);
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		ExtraStuffBlocks.register();
-
-		// Multipart
-		new PartRegister().register();
-
+		new PartRegister().register(); // Multipart
 		ExtraStuffItems.register();
 	}
 

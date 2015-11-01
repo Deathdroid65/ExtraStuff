@@ -1,5 +1,6 @@
 package extrastuff.client.render;
 
+import extrastuff.common.reference.Reference;
 import extrastuff.common.tileentity.TileEntityCable;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -9,8 +10,8 @@ import net.minecraftforge.common.util.ForgeDirection;
 import org.lwjgl.opengl.GL11;
 
 public class TileEntityRenderCable extends TileEntitySpecialRenderer {
-	ResourceLocation core = new ResourceLocation("extrastuff", "textures/blocks/models/CableCore.png");
-	ResourceLocation transmitter = new ResourceLocation("extrastuff", "textures/blocks/models/CableTransmitter.png");
+	ResourceLocation core = new ResourceLocation(Reference.MOD_ID, "textures/blocks/models/CableCore.png");
+	ResourceLocation transmitter = new ResourceLocation(Reference.MOD_ID, "textures/blocks/models/CableTransmitter.png");
 
 	float pixel = 1F / 16F; // Represents a single pixel in the texture
 	float texturePixel = 1F / 24F;
@@ -46,7 +47,7 @@ public class TileEntityRenderCable extends TileEntitySpecialRenderer {
 	 */
 	private void drawStraight(ForgeDirection direction) {
 		// Translate to the center of the core
-		this.bindTexture(core);
+		this.bindTexture(transmitter);
 		GL11.glTranslatef(0.5F, 0.5F, 0.5F);
 
 		if(direction == ForgeDirection.UP) {
@@ -57,37 +58,34 @@ public class TileEntityRenderCable extends TileEntitySpecialRenderer {
 			GL11.glRotatef(270, 0, 0, 1);
 		}
 
-		// Translate back to origin
 		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
 
 		Tessellator tessellator = Tessellator.instance;
 		tessellator.startDrawingQuads();
 		{
 			// Front
-			//tessellator.addVertexWithUV(x, y, z, textureX, textureY);
-
-			tessellator.addVertexWithUV(1 - 5 * pixel, 0, 1 - 5 * pixel, 24 * texturePixel, 24 * texturePixel);
-			tessellator.addVertexWithUV(1 - 5 * pixel, 1, 1 - 5 * pixel, 24 * texturePixel, 0 * texturePixel);
-			tessellator.addVertexWithUV(5 * pixel, 1, 1 - 5 * pixel, 0 * texturePixel, 0 * texturePixel);
-			tessellator.addVertexWithUV(5 * pixel, 0, 1 - 5 * pixel, 0 * texturePixel, 24 * texturePixel);
+			tessellator.addVertexWithUV(1 - 5 * pixel, 0, 1 - 5 * pixel, 0 * texturePixel, 24 * texturePixel);
+			tessellator.addVertexWithUV(1 - 5 * pixel, 1, 1 - 5 * pixel, 24 * texturePixel, 24 * texturePixel);
+			tessellator.addVertexWithUV(5 * pixel, 1, 1 - 5 * pixel, 24 * texturePixel, 0 * texturePixel);
+			tessellator.addVertexWithUV(5 * pixel, 0, 1 - 5 * pixel, 0 * texturePixel, 0 * texturePixel);
 
 			// Back
-			tessellator.addVertexWithUV(5 * pixel, 0, 5 * pixel, 24 * texturePixel, 24 * texturePixel);
-			tessellator.addVertexWithUV(5 * pixel, 1, 5 * pixel, 24 * texturePixel, 0 * texturePixel);
-			tessellator.addVertexWithUV(1 - 5 * pixel, 1, 5 * pixel, 0 * texturePixel, 0 * texturePixel);
-			tessellator.addVertexWithUV(1 - 5 * pixel, 0, 5 * pixel, 0 * texturePixel, 24 * texturePixel);
-
-			// Side
-			tessellator.addVertexWithUV(1 - 5 * pixel, 0, 5 * pixel, 24 * texturePixel, 24 * texturePixel);
-			tessellator.addVertexWithUV(1 - 5 * pixel, 1, 5 * pixel, 24 * texturePixel, 0 * texturePixel);
-			tessellator.addVertexWithUV(1 - 5 * pixel, 1, 1 - 5 * pixel, 0 * texturePixel, 0 * texturePixel);
-			tessellator.addVertexWithUV(1 - 5 * pixel, 0, 1 - 5 * pixel, 0 * texturePixel, 24 * texturePixel);
-
-			// Side
-			tessellator.addVertexWithUV(5 * pixel, 0, 1 - 5 * pixel, 24 * texturePixel, 24 * texturePixel);
-			tessellator.addVertexWithUV(5 * pixel, 1, 1 - 5 * pixel, 24 * texturePixel, 0 * texturePixel);
-			tessellator.addVertexWithUV(5 * pixel, 1, 5 * pixel, 0 * texturePixel, 0 * texturePixel);
 			tessellator.addVertexWithUV(5 * pixel, 0, 5 * pixel, 0 * texturePixel, 24 * texturePixel);
+			tessellator.addVertexWithUV(5 * pixel, 1, 5 * pixel, 24 * texturePixel, 24 * texturePixel);
+			tessellator.addVertexWithUV(1 - 5 * pixel, 1, 5 * pixel, 24 * texturePixel, 0 * texturePixel);
+			tessellator.addVertexWithUV(1 - 5 * pixel, 0, 5 * pixel, 0 * texturePixel, 0 * texturePixel);
+
+			// Side
+			tessellator.addVertexWithUV(1 - 5 * pixel, 0, 5 * pixel, 0 * texturePixel, 24 * texturePixel);
+			tessellator.addVertexWithUV(1 - 5 * pixel, 1, 5 * pixel, 24 * texturePixel, 24 * texturePixel);
+			tessellator.addVertexWithUV(1 - 5 * pixel, 1, 1 - 5 * pixel, 24 * texturePixel, 0 * texturePixel);
+			tessellator.addVertexWithUV(1 - 5 * pixel, 0, 1 - 5 * pixel, 0 * texturePixel, 0 * texturePixel);
+
+			// Side
+			tessellator.addVertexWithUV(5 * pixel, 0, 1 - 5 * pixel, 0 * texturePixel, 24 * texturePixel);
+			tessellator.addVertexWithUV(5 * pixel, 1, 1 - 5 * pixel, 24 * texturePixel, 24 * texturePixel);
+			tessellator.addVertexWithUV(5 * pixel, 1, 5 * pixel, 24 * texturePixel, 0 * texturePixel);
+			tessellator.addVertexWithUV(5 * pixel, 0, 5 * pixel, 0 * texturePixel, 0 * texturePixel);
 		}
 		tessellator.draw();
 
@@ -115,10 +113,10 @@ public class TileEntityRenderCable extends TileEntitySpecialRenderer {
 			// ROTATE
 		} else if(direction == ForgeDirection.DOWN) {
 			GL11.glRotatef(180, 1, 0, 0);
-		} else if(direction == ForgeDirection.NORTH) {
-			GL11.glRotatef(270, 1, 0, 0);
 		} else if(direction == ForgeDirection.SOUTH) {
 			GL11.glRotatef(90, 1, 0, 0);
+		} else if(direction == ForgeDirection.NORTH) {
+			GL11.glRotatef(270, 1, 0, 0);
 		} else if(direction == ForgeDirection.EAST) {
 			GL11.glRotatef(270, 0, 0, 1);
 		} else if(direction == ForgeDirection.WEST) {
