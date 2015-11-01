@@ -6,10 +6,12 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
+import net.minecraftforge.common.util.ForgeDirection;
 import org.lwjgl.opengl.GL11;
 
-public class ItemBlockEnergyCableRenderer implements IItemRenderer {
+public class ItemRenderCable implements IItemRenderer {
 	ResourceLocation core = new ResourceLocation(Reference.MOD_ID, "textures/blocks/models/CableCore.png");
+	ResourceLocation transmitter = new ResourceLocation(Reference.MOD_ID, "textures/blocks/models/CableTransmitter.png");
 
 	float pixel = 1F / 16F;
 	float texturePixel = 1F / 24F;
@@ -53,13 +55,19 @@ public class ItemBlockEnergyCableRenderer implements IItemRenderer {
 
 	@Override
 	public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
+		drawCore(type);
+		drawConnection(type, ForgeDirection.UP);
+		drawConnection(type, ForgeDirection.DOWN);
+	}
+
+	private void drawCore(ItemRenderType type) {
 		Minecraft.getMinecraft().renderEngine.bindTexture(core);
 		Tessellator tessellator = Tessellator.instance;
 		tessellator.startDrawingQuads();
 
 		// adjust rendering space to match what caller expects
 		boolean shouldUndoTranslate = false;
-		switch (type) {
+		switch(type) {
 			case EQUIPPED:
 			case EQUIPPED_FIRST_PERSON: {
 				break; // caller expects us to render over [0,0,0] to [1,1,1], no translation necessary
@@ -112,6 +120,96 @@ public class ItemBlockEnergyCableRenderer implements IItemRenderer {
 			tessellator.addVertexWithUV(1 - 5 * pixel, 5 * pixel, 5 * pixel, 0 * texturePixel, 24 * texturePixel);
 		}
 		tessellator.draw();
+
+		if(shouldUndoTranslate) {
+			GL11.glTranslatef(0.5F, 0.5F, 0.5F);
+		}
+	}
+
+	private void drawConnection(ItemRenderType type, ForgeDirection direction) {
+		Minecraft.getMinecraft().renderEngine.bindTexture(transmitter);
+		Tessellator tessellator = Tessellator.instance;
+		tessellator.startDrawingQuads();
+
+		// adjust rendering space to match what caller expects
+		boolean shouldUndoTranslate = false;
+		switch(type) {
+			case EQUIPPED:
+			case EQUIPPED_FIRST_PERSON: {
+				break; // caller expects us to render over [0,0,0] to [1,1,1], no translation necessary
+			}
+			case ENTITY:
+			case INVENTORY: {
+				// translate our coordinates so that [0,0,0] to [1,1,1] translates to the [-0.5, -0.5, -0.5] to [0.5, 0.5, 0.5] expected by the caller.
+				GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
+				shouldUndoTranslate = true;   // must undo the translation when we're finished rendering
+				break;
+			}
+			default:
+				break; // never here
+		}
+
+		if(direction == ForgeDirection.DOWN) {
+			GL11.glTranslatef(0, -(11 * pixel), 0);
+		}
+
+		{
+			// Front
+			tessellator.addVertexWithUV(1 - 5 * pixel, 1 - 5 * pixel, 1 - 5 * pixel, 0 * texturePixel, 24 * texturePixel);
+			tessellator.addVertexWithUV(1 - 5 * pixel, 1, 1 - 5 * pixel, 24 * texturePixel, 24 * texturePixel);
+			tessellator.addVertexWithUV(5 * pixel, 1, 1 - 5 * pixel, 24 * texturePixel, 0 * texturePixel);
+			tessellator.addVertexWithUV(5 * pixel, 1 - 5 * pixel, 1 - 5 * pixel, 0 * texturePixel, 0 * texturePixel);
+
+			// Back
+			tessellator.addVertexWithUV(5 * pixel, 1 - 5 * pixel, 5 * pixel, 0 * texturePixel, 24 * texturePixel);
+			tessellator.addVertexWithUV(5 * pixel, 1, 5 * pixel, 24 * texturePixel, 24 * texturePixel);
+			tessellator.addVertexWithUV(1 - 5 * pixel, 1, 5 * pixel, 24 * texturePixel, 0 * texturePixel);
+			tessellator.addVertexWithUV(1 - 5 * pixel, 1 - 5 * pixel, 5 * pixel, 0 * texturePixel, 0 * texturePixel);
+
+			// Side
+			tessellator.addVertexWithUV(1 - 5 * pixel, 1 - 5 * pixel, 5 * pixel, 0 * texturePixel, 24 * texturePixel);
+			tessellator.addVertexWithUV(1 - 5 * pixel, 1, 5 * pixel, 24 * texturePixel, 24 * texturePixel);
+			tessellator.addVertexWithUV(1 - 5 * pixel, 1, 1 - 5 * pixel, 24 * texturePixel, 0 * texturePixel);
+			tessellator.addVertexWithUV(1 - 5 * pixel, 1 - 5 * pixel, 1 - 5 * pixel, 0 * texturePixel, 0 * texturePixel);
+
+			// Side
+			tessellator.addVertexWithUV(5 * pixel, 1 - 5 * pixel, 1 - 5 * pixel, 0 * texturePixel, 24 * texturePixel);
+			tessellator.addVertexWithUV(5 * pixel, 1, 1 - 5 * pixel, 24 * texturePixel, 24 * texturePixel);
+			tessellator.addVertexWithUV(5 * pixel, 1, 5 * pixel, 24 * texturePixel, 0 * texturePixel);
+			tessellator.addVertexWithUV(5 * pixel, 1 - 5 * pixel, 5 * pixel, 0 * texturePixel, 0 * texturePixel);
+
+
+
+
+			// Front
+			tessellator.addVertexWithUV(5 * pixel, 1 - 5 * pixel, 1 - 5 * pixel, 0 * texturePixel, 24 * texturePixel);
+			tessellator.addVertexWithUV(5 * pixel, 1, 1 - 5 * pixel, 24 * texturePixel, 24 * texturePixel);
+			tessellator.addVertexWithUV(1 - 5 * pixel, 1, 1 - 5 * pixel, 24 * texturePixel, 0 * texturePixel);
+			tessellator.addVertexWithUV(1 - 5 * pixel, 1 - 5 * pixel, 1 - 5 * pixel, 0 * texturePixel, 0 * texturePixel);
+
+			// Back
+			tessellator.addVertexWithUV(1 - 5 * pixel, 1 - 5 * pixel, 5 * pixel, 0 * texturePixel, 24 * texturePixel);
+			tessellator.addVertexWithUV(1 - 5 * pixel, 1, 5 * pixel, 24 * texturePixel, 24 * texturePixel);
+			tessellator.addVertexWithUV(5 * pixel, 1, 5 * pixel, 24 * texturePixel, 0 * texturePixel);
+			tessellator.addVertexWithUV(5 * pixel, 1 - 5 * pixel, 5 * pixel, 0 * texturePixel, 0 * texturePixel);
+
+			// Side
+			tessellator.addVertexWithUV(1 - 5 * pixel, 1 - 5 * pixel, 1 - 5 * pixel, 0 * texturePixel, 24 * texturePixel);
+			tessellator.addVertexWithUV(1 - 5 * pixel, 1, 1 - 5 * pixel, 24 * texturePixel, 24 * texturePixel);
+			tessellator.addVertexWithUV(1 - 5 * pixel, 1, 5 * pixel, 24 * texturePixel, 0 * texturePixel);
+			tessellator.addVertexWithUV(1 - 5 * pixel, 1 - 5 * pixel, 5 * pixel, 0 * texturePixel, 0 * texturePixel);
+
+			// Side
+			tessellator.addVertexWithUV(5 * pixel, 1 - 5 * pixel, 5 * pixel, 0 * texturePixel, 24 * texturePixel);
+			tessellator.addVertexWithUV(5 * pixel, 1, 5 * pixel, 24 * texturePixel, 24 * texturePixel);
+			tessellator.addVertexWithUV(5 * pixel, 1, 1 - 5 * pixel, 24 * texturePixel, 0 * texturePixel);
+			tessellator.addVertexWithUV(5 * pixel, 1 - 5 * pixel, 1 - 5 * pixel, 0 * texturePixel, 0 * texturePixel);
+		}
+		tessellator.draw();
+
+		if(direction == ForgeDirection.DOWN) {
+			GL11.glTranslatef(0, 11 * pixel, 0);
+		}
 
 		if (shouldUndoTranslate) {
 			GL11.glTranslatef(0.5F, 0.5F, 0.5F);

@@ -24,7 +24,7 @@ public class TileEntityRenderCable extends TileEntitySpecialRenderer {
 			TileEntityCable cable = (TileEntityCable) tileEntity;
 
 			if(cable.shouldRenderCore) {
-				drawCore(tileEntity);
+				drawCore();
 				// Render connections
 				for(int i = 0; i < cable.connections.length; i++) {
 					if(cable.connections[i] != null) {
@@ -176,7 +176,7 @@ public class TileEntityRenderCable extends TileEntitySpecialRenderer {
 		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
 	}
 
-	private void drawCore(TileEntity tileEntity) {
+	private void drawCore() {
 		this.bindTexture(core);
 		Tessellator tessellator = Tessellator.instance;
 		tessellator.startDrawingQuads();
