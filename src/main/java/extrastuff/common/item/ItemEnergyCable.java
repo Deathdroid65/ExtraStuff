@@ -7,19 +7,19 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.Item;
 import net.minecraft.util.IIcon;
 
-public class ItemTitaniumIngot extends Item {
+public class ItemEnergyCable extends Item {
 	public IIcon[] icons = new IIcon[1];
 
-	public ItemTitaniumIngot() {
+	public ItemEnergyCable() {
 		maxStackSize = 64;
-		setUnlocalizedName(Reference.MOD_ID + ":titaniumIngot");
-		this.setTextureName("TitaniumIngot");
+		setUnlocalizedName(Reference.MOD_ID + ":itemEnergyCable");
+		this.setTextureName("Cable");
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister register) {
-		icons[0] = register.registerIcon(Reference.MOD_ID + ":TitaniumIngot");
+		icons[0] = register.registerIcon(Reference.MOD_ID + ":itemEnergyCable");
 	}
 
 	@Override

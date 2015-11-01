@@ -1,2 +1,3 @@
-tile.titaniumBlock.name=Titanium Block
-item.titaniumIngot.name=Titanium Ingot
+tile.extrastuff:energyCable.name=Energy Cable
+tile.extrastuff:titaniumBlock.name=Titanium Block
+item.extrastuff:titaniumIngot.name=Titanium Ingot
